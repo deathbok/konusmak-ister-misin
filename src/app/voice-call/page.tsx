@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { db } from '@/lib/firebase';
 import { ref, onValue, onChildAdded, set } from 'firebase/database';
@@ -30,7 +30,7 @@ export default function VoiceCallPage() {
       return;
     }
 
-    const manager = createWebRTCManager(roomId, userId, userRole);
+    const manager = createWebRTCManager(roomId, userId, userRole as string);
     setWebrtcManager(manager);
 
     // Setup callbacks
@@ -57,7 +57,7 @@ export default function VoiceCallPage() {
     return () => {
       manager.cleanup();
     };
-  }, [roomId, userId, router]);
+  }, [roomId, userId, userRole, router, endCall]);
 
   // Firebase signaling listeners
   useEffect(() => {
@@ -190,7 +190,7 @@ export default function VoiceCallPage() {
   };
 
   // End voice call
-  const endCall = () => {
+  const endCall = useCallback(() => {
     if (webrtcManager) {
       webrtcManager.cleanup();
     }
@@ -208,7 +208,7 @@ export default function VoiceCallPage() {
     }
 
     console.log('Call ended');
-  };
+  }, [webrtcManager]);
 
   // Leave and go back
   const leaveCall = () => {
