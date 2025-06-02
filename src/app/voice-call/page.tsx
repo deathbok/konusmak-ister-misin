@@ -23,6 +23,27 @@ export default function VoiceCallPage() {
   const localAudioRef = useRef<HTMLAudioElement>(null);
   const remoteAudioRef = useRef<HTMLAudioElement>(null);
 
+  // End voice call
+  const endCall = useCallback(() => {
+    if (webrtcManager) {
+      webrtcManager.cleanup();
+    }
+
+    setIsCallActive(false);
+    setIsCallConnecting(false);
+    setConnectionState('new');
+
+    // Clear audio elements
+    if (localAudioRef.current) {
+      localAudioRef.current.srcObject = null;
+    }
+    if (remoteAudioRef.current) {
+      remoteAudioRef.current.srcObject = null;
+    }
+
+    console.log('Call ended');
+  }, [webrtcManager]);
+
   // Initialize WebRTC manager
   useEffect(() => {
     if (!roomId || !userId) {
@@ -45,7 +66,7 @@ export default function VoiceCallPage() {
     manager.onConnectionState((state) => {
       console.log('Connection state:', state);
       setConnectionState(state);
-      
+
       if (state === 'connected') {
         setIsCallConnecting(false);
         setIsCallActive(true);
@@ -188,27 +209,6 @@ export default function VoiceCallPage() {
       alert('Arama başlatılamadı. Mikrofon erişimi kontrol edin.');
     }
   };
-
-  // End voice call
-  const endCall = useCallback(() => {
-    if (webrtcManager) {
-      webrtcManager.cleanup();
-    }
-
-    setIsCallActive(false);
-    setIsCallConnecting(false);
-    setConnectionState('new');
-
-    // Clear audio elements
-    if (localAudioRef.current) {
-      localAudioRef.current.srcObject = null;
-    }
-    if (remoteAudioRef.current) {
-      remoteAudioRef.current.srcObject = null;
-    }
-
-    console.log('Call ended');
-  }, [webrtcManager]);
 
   // Leave and go back
   const leaveCall = () => {
