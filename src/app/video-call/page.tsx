@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { startCall, answerCall, endCall, getUserMediaWithVideo, listenForCall } from '@/lib/webrtc-simple';
+import { startCall, endCall, getUserMediaWithVideo, listenForCall } from '@/lib/webrtc-simple';
 
 type UserRole = 'speaker' | 'listener' | null;
 

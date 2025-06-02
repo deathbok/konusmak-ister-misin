@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { db } from '@/lib/firebase';
-import { ref, onValue, off, onChildAdded, set } from 'firebase/database';
+import { ref, onValue, onChildAdded, set } from 'firebase/database';
 import { WebRTCManager, createWebRTCManager } from '@/utils/webrtc';
 
 type UserRole = 'speaker' | 'listener' | null;
@@ -156,7 +156,7 @@ export default function VoiceCallPage() {
       if (typeof answerListener === 'function') answerListener();
       if (typeof candidatesListener === 'function') candidatesListener();
     };
-  }, [roomId, userId, webrtcManager, isCallActive, isCallConnecting]);
+  }, [roomId, userId, webrtcManager, isCallActive, isCallConnecting, userRole]);
 
   // Start voice call
   const startCall = async () => {

@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { db } from '@/lib/firebase';
-import { ref, push, onValue, off, serverTimestamp, get, set, onDisconnect, onChildAdded } from 'firebase/database';
+import { ref, push, onValue, off, serverTimestamp, get, set, onDisconnect } from 'firebase/database';
 
 type UserRole = 'speaker' | 'listener' | null;
 
@@ -35,7 +35,7 @@ function RoomPageContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [otherUserLeft, setOtherUserLeft] = useState(false);
   const [otherUserId, setOtherUserId] = useState<string>('');
-  const [otherUserRole, setOtherUserRole] = useState<UserRole>(null);
+
   const [presenceInitialized, setPresenceInitialized] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
@@ -70,7 +70,6 @@ function RoomPageContent() {
     }
 
     setUserRole(storedRole);
-    setOtherUserRole(storedRole === 'speaker' ? 'listener' : 'speaker');
 
     // Generate or get user ID
     if (storedUserId) {
@@ -184,7 +183,7 @@ function RoomPageContent() {
     };
 
     setupPresence();
-  }, [roomId, userId, otherUserId]);
+  }, [roomId, userId, otherUserId, presenceInitialized]);
 
   // Listen for messages
   useEffect(() => {

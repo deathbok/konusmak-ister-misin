@@ -29,7 +29,7 @@ export default function EslesmePage() {
   const [userId, setUserId] = useState<string>('');
   const [queueCount, setQueueCount] = useState({ speakers: 0, listeners: 0 });
   const [queueStartTime, setQueueStartTime] = useState<number | null>(null);
-  const [elapsedTime, setElapsedTime] = useState(0);
+
   const [countdown, setCountdown] = useState(30);
   const router = useRouter();
 
@@ -78,7 +78,7 @@ export default function EslesmePage() {
       await remove(ref(db, `queue/${userRole}s/${userId}`));
       setIsInQueue(false);
       setQueueStartTime(null);
-      setElapsedTime(0);
+
     } catch (error) {
       console.error('Error removing from queue:', error);
     }
@@ -98,7 +98,6 @@ export default function EslesmePage() {
       interval = setInterval(() => {
         const now = Date.now();
         const elapsed = Math.floor((now - queueStartTime) / 1000);
-        setElapsedTime(elapsed);
 
         // 30 second countdown
         const remaining = Math.max(0, 30 - elapsed);
@@ -110,7 +109,6 @@ export default function EslesmePage() {
         }
       }, 1000);
     } else {
-      setElapsedTime(0);
       setCountdown(30);
     }
 
@@ -242,12 +240,7 @@ export default function EslesmePage() {
   const getRoleText = () => userRole === 'speaker' ? 'konuşmacı' : 'dinleyici';
   const getRoleEmoji = () => userRole === 'speaker' ? '💬' : '👂';
 
-  // Format elapsed time as MM:SS
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
