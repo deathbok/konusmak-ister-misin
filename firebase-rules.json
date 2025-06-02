@@ -1,0 +1,46 @@
+{
+  "rules": {
+    "queue": {
+      ".read": true,
+      ".write": true,
+      "speakers": {
+        "$userId": {
+          ".validate": "newData.hasChildren(['id', 'role', 'timestamp']) && newData.child('role').val() == 'speaker'"
+        }
+      },
+      "listeners": {
+        "$userId": {
+          ".validate": "newData.hasChildren(['id', 'role', 'timestamp']) && newData.child('role').val() == 'listener'"
+        }
+      }
+    },
+    "matches": {
+      ".read": true,
+      ".write": true,
+      "$userId": {
+        ".validate": "newData.hasChildren(['roomId'])"
+      }
+    },
+    "rooms": {
+      ".read": true,
+      ".write": true,
+      "$roomId": {
+        ".validate": "newData.hasChildren(['id', 'speaker', 'listener', 'createdAt', 'status'])",
+        "messages": {
+          ".read": true,
+          ".write": true,
+          "$messageId": {
+            ".validate": "newData.hasChildren(['text', 'senderId', 'senderRole', 'timestamp'])"
+          }
+        },
+        "presence": {
+          ".read": true,
+          ".write": true,
+          "$userId": {
+            ".validate": "newData.hasChildren(['online', 'lastSeen'])"
+          }
+        }
+      }
+    }
+  }
+}
