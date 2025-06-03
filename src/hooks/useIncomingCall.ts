@@ -23,7 +23,7 @@ export function useIncomingCall(userId: string, userRole: string) {
     // Listen for incoming calls in the calls database
     const callsRef = ref(db, 'calls');
     
-    const handleIncomingCall = (snapshot: { val: () => Record<string, any> | null }) => {
+    const handleIncomingCall = (snapshot: { val: () => Record<string, unknown> | null }) => {
       const calls = snapshot.val();
       if (!calls) return;
 
