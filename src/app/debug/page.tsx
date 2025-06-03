@@ -109,7 +109,7 @@ export default function DebugPage() {
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">🔧 Debug Panel</h1>
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">🔧 Debug Panel v1.1</h1>
         
         <div className="space-y-4">
           <div className="p-4 border rounded-lg">
