@@ -70,13 +70,31 @@ export default function Home() {
           <p className="text-xs sm:text-sm text-gray-500">
             Anonim ve güvenli bir ortamda bağlantı kur
           </p>
-          <div className="mt-4">
-            <a
-              href="/debug"
-              className="text-xs text-blue-500 hover:text-blue-700 underline"
-            >
-              🔧 Debug Panel
-            </a>
+          <div className="mt-4 space-y-2">
+            <div>
+              <a
+                href="/smart-call?role=speaker&userId=test-speaker"
+                className="text-xs text-green-500 hover:text-green-700 underline block"
+              >
+                📞 Akıllı Arama Test (Konuşmacı)
+              </a>
+            </div>
+            <div>
+              <a
+                href="/smart-call?role=listener&userId=test-listener"
+                className="text-xs text-purple-500 hover:text-purple-700 underline block"
+              >
+                📞 Akıllı Arama Test (Dinleyici)
+              </a>
+            </div>
+            <div>
+              <a
+                href="/debug"
+                className="text-xs text-blue-500 hover:text-blue-700 underline block"
+              >
+                🔧 Debug Panel
+              </a>
+            </div>
           </div>
         </div>
       </div>
