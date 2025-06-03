@@ -18,6 +18,7 @@ interface RoomData {
   callerRole?: string;
   targetRole?: string;
   timestamp?: number;
+  status?: string;
 }
 
 export function useIncomingCall(userId: string, userRole: string) {
@@ -40,8 +41,8 @@ export function useIncomingCall(userId: string, userRole: string) {
       Object.keys(calls).forEach(roomId => {
         const roomData = calls[roomId] as RoomData;
 
-        // If there's an offer and we're not the caller
-        if (roomData?.offer && roomData?.callerId && roomData.callerId !== userId) {
+        // If there's a call and we're not the caller
+        if (roomData?.callerId && roomData.callerId !== userId && roomData?.status === 'calling') {
           // Check if this call is meant for our role
           const targetRole = roomData.targetRole;
           if (targetRole && targetRole === userRole) {
