@@ -155,11 +155,37 @@ function SmartCallContent() {
     // Clear audio elements
     const localAudio = document.getElementById('local-audio') as HTMLAudioElement;
     const remoteAudio = document.getElementById('remote-audio') as HTMLAudioElement;
-    
+
     if (localAudio) localAudio.srcObject = null;
     if (remoteAudio) remoteAudio.srcObject = null;
 
+    // Update call status in Firebase
+    if (roomId) {
+      const callRef = ref(db, `calls/${roomId}/status`);
+      set(callRef, 'ended');
+    }
+
     console.log('Call ended');
+  };
+
+  // Cancel outgoing call
+  const cancelCall = () => {
+    endCall();
+
+    // Update call status in Firebase
+    if (roomId) {
+      const callRef = ref(db, `calls/${roomId}/status`);
+      set(callRef, 'cancelled');
+    }
+  };
+
+  // Leave to home page
+  const leaveToHome = () => {
+    // Only end call if active, don't interfere with ongoing calls
+    if (isCallActive || isCallConnecting) {
+      endCall();
+    }
+    router.push('/');
   };
 
   // Redirect if no role
@@ -217,6 +243,7 @@ function SmartCallContent() {
         {/* Call Controls */}
         <div className="space-y-4">
           {isCallActive ? (
+            // Arama aktif - Sonlandır butonu
             <button
               onClick={endCall}
               className="w-full py-3 px-6 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl transition-colors"
@@ -224,13 +251,15 @@ function SmartCallContent() {
               📞 Aramayı Sonlandır
             </button>
           ) : isCallConnecting ? (
+            // Arama bağlanıyor - İptal butonu
             <button
-              disabled
-              className="w-full py-3 px-6 bg-yellow-500 text-white font-semibold rounded-xl"
+              onClick={cancelCall}
+              className="w-full py-3 px-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-colors"
             >
-              🔄 Bağlanıyor...
+              ❌ Aramayı İptal Et
             </button>
           ) : (
+            // Arama bekleniyor - Başlat butonu
             <button
               onClick={handleStartCall}
               className="w-full py-3 px-6 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-colors"
@@ -239,8 +268,9 @@ function SmartCallContent() {
             </button>
           )}
 
+          {/* Ana sayfaya dön - Her zaman görünür */}
           <button
-            onClick={() => router.push('/')}
+            onClick={leaveToHome}
             className="w-full py-2 px-6 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-xl transition-colors"
           >
             🏠 Ana Sayfaya Dön
