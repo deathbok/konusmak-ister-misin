@@ -29,10 +29,10 @@ export function useIncomingCall(userId: string, userRole: string) {
 
       // Check all rooms for new offers
       Object.keys(calls).forEach(roomId => {
-        const roomData = calls[roomId];
-        
+        const roomData = calls[roomId] as any;
+
         // If there's an offer and we're not the caller
-        if (roomData.offer && roomData.callerId && roomData.callerId !== userId) {
+        if (roomData?.offer && roomData?.callerId && roomData.callerId !== userId) {
           // Check if this call is meant for our role
           const targetRole = roomData.targetRole;
           if (targetRole && targetRole === userRole) {
@@ -44,7 +44,7 @@ export function useIncomingCall(userId: string, userRole: string) {
                 callerRole: roomData.callerRole || 'unknown',
                 timestamp: roomData.timestamp || Date.now()
               };
-              
+
               // Only show if it's a recent call (within last 30 seconds)
               const now = Date.now();
               if (now - callInfo.timestamp < 30000) {
