@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { startCall, endCall, getUserMediaWithVideo, listenForCall } from '@/lib/webrtc-simple';
 
 type UserRole = 'speaker' | 'listener' | null;
 
-export default function VideoCallPage() {
+function VideoCallContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const roomId = searchParams.get('roomId');
@@ -265,5 +265,20 @@ export default function VideoCallPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function VideoCallPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Yükleniyor...</p>
+        </div>
+      </div>
+    }>
+      <VideoCallContent />
+    </Suspense>
   );
 }

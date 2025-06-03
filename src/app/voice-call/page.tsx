@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { db } from '@/lib/firebase';
 import { ref, onValue, onChildAdded, set } from 'firebase/database';
@@ -8,7 +8,7 @@ import { WebRTCManager, createWebRTCManager } from '@/utils/webrtc';
 
 type UserRole = 'speaker' | 'listener' | null;
 
-export default function VoiceCallPage() {
+function VoiceCallContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const roomId = searchParams.get('roomId');
@@ -307,5 +307,20 @@ export default function VoiceCallPage() {
       <audio ref={localAudioRef} autoPlay muted style={{ display: 'none' }} />
       <audio ref={remoteAudioRef} autoPlay playsInline style={{ display: 'none' }} />
     </div>
+  );
+}
+
+export default function VoiceCallPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Yükleniyor...</p>
+        </div>
+      </div>
+    }>
+      <VoiceCallContent />
+    </Suspense>
   );
 }
