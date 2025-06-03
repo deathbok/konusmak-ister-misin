@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { db } from '@/lib/firebase';
-import { ref, set, onValue, off } from 'firebase/database';
+import { ref, set } from 'firebase/database';
 import { startCall, listenForCall } from '@/lib/webrtc-simple';
 import IncomingCallModal from '@/components/IncomingCallModal';
 import { useIncomingCall } from '@/hooks/useIncomingCall';
