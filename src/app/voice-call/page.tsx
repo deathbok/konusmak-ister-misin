@@ -215,12 +215,18 @@ function VoiceCallContent() {
     endCall();
   };
 
-  // Leave and go back
+  // Leave call and go back to chat
   const leaveCall = () => {
-    // Only end call if active, don't interfere with ongoing calls
+    // Always end call when leaving
     if (isCallActive || isCallConnecting) {
       endCall();
     }
+    // Go back to chat page
+    router.push(`/sohbet?roomId=${roomId}`);
+  };
+
+  // Go to home page
+  const goToHome = () => {
     router.push('/');
   };
 
@@ -300,12 +306,20 @@ function VoiceCallContent() {
             </button>
           )}
 
-          {/* Ana sayfaya dön - Her zaman görünür */}
+          {/* Ayrıl - Sohbet sayfasına dön */}
           <button
             onClick={leaveCall}
             className="w-full py-2 px-6 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-xl transition-colors"
           >
-            🏠 Ana Sayfaya Dön
+            🚪 Ayrıl
+          </button>
+
+          {/* Ana sayfaya dön */}
+          <button
+            onClick={goToHome}
+            className="w-full py-2 px-6 bg-gray-400 hover:bg-gray-500 text-white font-semibold rounded-xl transition-colors"
+          >
+            🏠 Ana Sayfa
           </button>
         </div>
 
