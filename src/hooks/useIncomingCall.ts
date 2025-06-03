@@ -11,6 +11,15 @@ interface IncomingCall {
   timestamp: number;
 }
 
+interface RoomData {
+  offer?: unknown;
+  answer?: unknown;
+  callerId?: string;
+  callerRole?: string;
+  targetRole?: string;
+  timestamp?: number;
+}
+
 export function useIncomingCall(userId: string, userRole: string) {
   const [incomingCall, setIncomingCall] = useState<IncomingCall | null>(null);
   const [isListening, setIsListening] = useState(false);
@@ -29,7 +38,7 @@ export function useIncomingCall(userId: string, userRole: string) {
 
       // Check all rooms for new offers
       Object.keys(calls).forEach(roomId => {
-        const roomData = calls[roomId] as any;
+        const roomData = calls[roomId] as RoomData;
 
         // If there's an offer and we're not the caller
         if (roomData?.offer && roomData?.callerId && roomData.callerId !== userId) {
