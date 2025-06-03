@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
-import { ref, onValue, set, push } from 'firebase/database';
+import { ref, onValue, set } from 'firebase/database';
 
 export default function DebugPage() {
   const [firebaseStatus, setFirebaseStatus] = useState('Testing...');
