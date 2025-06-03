@@ -36,7 +36,7 @@ export default function DebugPage() {
       });
     } catch (error) {
       console.error('Firebase test error:', error);
-      setFirebaseStatus(`❌ Firebase Error: ${error.message}`);
+      setFirebaseStatus(`❌ Firebase Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
@@ -47,7 +47,7 @@ export default function DebugPage() {
       stream.getTracks().forEach(track => track.stop());
     } catch (error) {
       console.error('Microphone test error:', error);
-      setMicrophoneStatus(`❌ Microphone Error: ${error.message}`);
+      setMicrophoneStatus(`❌ Microphone Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
@@ -77,7 +77,7 @@ export default function DebugPage() {
       }, 5000);
     } catch (error) {
       console.error('WebRTC test error:', error);
-      setWebrtcStatus(`❌ WebRTC Error: ${error.message}`);
+      setWebrtcStatus(`❌ WebRTC Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
