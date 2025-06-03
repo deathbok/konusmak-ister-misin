@@ -327,12 +327,31 @@ function SohbetPageContent() {
               </p>
             </div>
           </div>
-          <button
-            onClick={leaveChat}
-            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors duration-200"
-          >
-            Sohbeti Bitir
-          </button>
+          <div className="flex gap-2">
+            {/* Akıllı Sesli Arama */}
+            <a
+              href={`/smart-call?roomId=${roomId}&role=${userRole}&userId=${userId}`}
+              className="px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors duration-200 text-sm"
+            >
+              📞 Akıllı Arama
+            </a>
+
+            {/* Normal Sesli Arama */}
+            <a
+              href={`/voice-call?roomId=${roomId}&role=${userRole}&userId=${userId}`}
+              className="px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200 text-sm"
+            >
+              🎤 Sesli Arama
+            </a>
+
+            {/* Sohbeti Bitir */}
+            <button
+              onClick={leaveChat}
+              className="px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors duration-200 text-sm"
+            >
+              Bitir
+            </button>
+          </div>
         </div>
       </div>
 
