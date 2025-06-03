@@ -70,6 +70,14 @@ export default function Home() {
           <p className="text-xs sm:text-sm text-gray-500">
             Anonim ve güvenli bir ortamda bağlantı kur
           </p>
+          <div className="mt-4">
+            <a
+              href="/debug"
+              className="text-xs text-blue-500 hover:text-blue-700 underline"
+            >
+              🔧 Debug Panel
+            </a>
+          </div>
         </div>
       </div>
     </div>
