@@ -294,7 +294,7 @@ function SmartCallContent() {
         {/* Room Info */}
         <div className="mt-6 pt-4 border-t border-gray-200">
           <p className="text-xs text-gray-500">Oda ID: {roomId}</p>
-          <p className="text-xs text-gray-400 mt-1">Akıllı Arama Sistemi</p>
+          <p className="text-xs text-gray-400 mt-1">Akıllı Arama Sistemi v2.0</p>
         </div>
       </div>
 
